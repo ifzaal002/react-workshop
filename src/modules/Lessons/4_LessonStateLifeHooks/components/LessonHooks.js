@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import HooksList from './HooksList';
+import Countries from '../../../../util/countries';
+import Fonts from '../../../../util/fonts';
 
 class LessonHooks extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fontColor: null,
-      lastUpdated: null,
+      fontColor: '#000000',
+      lastUpdated: new Date().toString(),
       countries: null,
     };
 
@@ -17,33 +19,35 @@ class LessonHooks extends Component {
 
   componentWillMount() {
     console.log('...componentWillMount...');
-    /* With a timeout delay of 5 seconds, import Countries data from file and set it in the state. */
+    setTimeout(() => {
+      this.setState({countries: Countries, lastUpdated: new Date().toString()});
+    }, 5000);
   }
 
   componentDidMount() {
     console.log('...componentDidMount...');
-    /* Set up lastUpdated field in the state as soon as the component gets mounted */
-    /* Set up fontColor as black in the state as soon as the component gets mounted */
   }
 
+  getRandomFont = () => {
+    return Fonts[parseInt(Math.random() * 10 % Fonts.length, 10)];
+  };
   toggleFontColor() {
-    /* pick up a random font and set it in the state */
     this.setState({
-      fontColor: '#737373',
+      fontColor: this.getRandomFont(),
     });
   }
 
   render() {
     console.log('...render...');
 
-     // eslint-disable-next-line no-unused-vars
-    const { fontColor, countries, lastUpdated } = this.state;
+    // eslint-disable-next-line no-unused-vars
+    const {fontColor, countries, lastUpdated} = this.state;
 
-    return(
+    return (
         <section className="lesson-hooks info-panel">
           <h2>Lifecycle Hooks</h2>
           <div className="data">
-            <HooksList fontColor={fontColor} />
+            <HooksList countries={countries} fontColor={fontColor}/>
           </div>
           {
             countries && (
@@ -52,6 +56,7 @@ class LessonHooks extends Component {
                 </div>
             )
           }
+          <h2>Last Updated: {lastUpdated}</h2>
         </section>
     );
   }
