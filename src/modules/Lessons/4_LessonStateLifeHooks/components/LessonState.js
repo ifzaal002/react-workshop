@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import './LessonState.css';
 
@@ -11,9 +11,6 @@ class LessonState extends Component {
       score: 24,
       matchTimes: [new Date()],
     };
-
-    this.updateScore = this.updateScore.bind(this);
-    this.increaseVictories = this.increaseVictories.bind(this);
   }
 
   componentDidMount() {
@@ -25,12 +22,12 @@ class LessonState extends Component {
     }, 400);
   }
 
-  updateScore() {
+  updateScore = () => {
     /* State update via custom function */
     this.setState({
       score: this.getRandomNumber(),
     });
-  }
+  };
 
   getRandomNumber = () => {
     const min = 1;
@@ -38,15 +35,15 @@ class LessonState extends Component {
     return parseInt((Math.random() * (max - min) + min).toString(), 10)
   };
 
-  increaseVictories() {
+  increaseVictories = () => {
     /* State update via Event Handler */
     this.setState({
-      matchTimes: [ ...this.state.matchTimes, new Date() ],
+      matchTimes: [...this.state.matchTimes, new Date()],
     });
-  }
+  };
 
   render() {
-    const { name, score, matchTimes } = this.state;
+    const {name, score, matchTimes} = this.state;
 
     return (
         <section className="lesson-state info-panel">
@@ -57,14 +54,15 @@ class LessonState extends Component {
             <span>Score: <strong>{score}</strong></span>
             <br/><br/>
             <h3>Match Times</h3>
+            <div className="state-actions">
+              <button onClick={this.updateScore}>Update Score</button>
+              <button onClick={this.increaseVictories}>Increase Matches</button>
+            </div>
+
             <ul>{
-                matchTimes.map((time, index) => <li key={index}>{time.toString()}</li>)
-              }
+              matchTimes.map((time, index) => <li key={index}>{time.toString()}</li>)
+            }
             </ul>
-          </div>
-          <div className="state-actions">
-            <button onClick={this.updateScore}>Update Score</button>
-            <button onClick={this.increaseVictories}>Increase Matches</button>
           </div>
           <div className="notes">
             <h5>Notes</h5>

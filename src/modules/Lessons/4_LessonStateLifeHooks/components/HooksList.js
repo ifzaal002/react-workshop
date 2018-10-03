@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 class HooksList extends Component {
@@ -6,34 +6,32 @@ class HooksList extends Component {
     super(props);
 
     this.state = {
-      fontColor: props.fontColor || 'red',
+      fontColor: 'red',
       countries: [],
       isLoading: true,
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('...componentWillReceiveProps...');
-    /*
-      - Listen to changes in prop and update the state of component IF the data (countries or fontColor) has changed
-      - remember to also update the isLoading state accordingly
-    */
+    this.setState({fontColor:nextProps.fontColor});
+    if (this.state.countries !== nextProps.countries) {
+      this.setState({countries: nextProps.countries, isLoading: !nextProps.countries});
+    }
+
   }
 
   render() {
-
-    const { isLoading, countries } = this.state;
-
-    return isLoading ? <h4>Loading data...</h4> : (
+    const {countries, fontColor, isLoading} = this.state;
+    return isLoading ? <h3>Loading......</h3> : (
         <ul className="countries-list">
           {
-            countries.map(country => <li>{country}</li>)
+            countries.map(country => <li key={country.value} style={{color: fontColor}}>{country.label}</li>)
           }
         </ul>
     );
   }
-}
 
+}
 
 HooksList.propTypes = {
   fontColor: PropTypes.string,
