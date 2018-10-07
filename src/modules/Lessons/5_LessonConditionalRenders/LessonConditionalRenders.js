@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Intro from './components/ConditionalRenderIntro';
-import ConditionalRenderPractice from './components/ConditionalRenderPractice';
+import DataView from "./components/DataView";
 
 const LessonConditionalRenders = ({title}) => {
   return (
       <div className="lesson-container">
         <Intro title={title} />
         <div className="lesson-parts">
-          <ConditionalRenderPractice />
+          <DataView />
         </div>
       </div>
   );
