@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from "prop-types";
 
 import Intro from './components/UserDataIntro';
-import PracticeUserData from './components/PracticeUserData';
+import UserForm from './assignment/UserForm';
 
 const LessonUserData = ({title}) => {
   return (
     <div className="lesson-container">
       <Intro title={title}/>
       <div className="lesson-parts">
-        <PracticeUserData />
+        <UserForm />
       </div>
     </div>
   );
