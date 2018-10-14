@@ -1,5 +1,7 @@
 const resultsList = [
   {
+    code: 'PIA1',
+    airlineCode: 'PIA',
     airline: 'Pakistan Airlines',
     details: {
       departure: 'Lahore',
@@ -32,6 +34,8 @@ const resultsList = [
     },
   },
   {
+    code: 'PIA2',
+    airlineCode: 'PIA',
     airline: 'Pakistan Airlines',
     details: {
       departure: 'Lahore',
@@ -64,6 +68,8 @@ const resultsList = [
     },
   },
   {
+    code: 'PIA3',
+    airlineCode: 'PIA',
     airline: 'Pakistan Airlines',
     details: {
       departure: 'Lahore',
@@ -96,6 +102,8 @@ const resultsList = [
     },
   },
   {
+    code: 'PIA4',
+    airlineCode: 'PIA',
     airline: 'Pakistan Airlines',
     details: {
       departure: 'Lahore',
