@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Intro from './components/LessonContPresIntro';
-import SearchResults from './components/SearchResults';
+import Intro from './assignment/LessonContPresIntro';
+import SearchResults from './assignment/SearchResults';
 
 const LessonContainerPresentational = ({title}) => {
   return (
