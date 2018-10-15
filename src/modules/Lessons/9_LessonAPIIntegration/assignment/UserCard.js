@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import './UserCard.css'
 
-import './UserCard.css';
 
-const UserCard = ({user}) => {
+const UserCard = ({user, onViewRepoClick}) => {
   return (
       <div className="card user">
         <img src={user.avatar_url} alt="User Profile" width="100"/>
@@ -23,13 +22,12 @@ const UserCard = ({user}) => {
           </tr>
           </tbody>
         </table>
-        <button className="action-btn" onClick={() => loadReposCB(user.repos_url)}>View Repositories</button>
+        <button className="action-btn" onClick={() => {
+          onViewRepoClick(user.repos_url)
+        }}>View Repositories
+        </button>
       </div>
-  );
-};
-
-UserCard.propTypes = {
-  user: PropTypes.object.isRequired,
+  )
 };
 
 export default UserCard;
