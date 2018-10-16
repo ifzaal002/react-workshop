@@ -3,8 +3,10 @@ import axios from "axios";
 import ErrorMsg from "./ErrorMsg";
 import Results from "./Results";
 import LoaderImage from "./LoaderImage";
+import SearchBox from "./SearchBox";
 
 import './Dashboard.css'
+import ResultNotification from "./ResultNotification";
 
 const APP_STATE = {
   IS_LOADING: 'IS_LOADING',
@@ -27,6 +29,7 @@ class Dashboard extends React.Component {
       appState: APP_STATE.IS_LOADING,
       results: [],
       dashboard: DASHBOARD_TYPE.USERS,
+      query: '',
       error: '',
     }
   }
@@ -35,11 +38,11 @@ class Dashboard extends React.Component {
     this.fetchData(`${API_URL}/users`, this.onSuccess, this.onError);
   }
 
-  onSuccess = (response)=>{
+  onSuccess = (response) => {
     this.setState({appState: APP_STATE.IS_READY, results: response.data});
   };
 
-  onError = (error)=>{
+  onError = (error) => {
     this.setState({appState: APP_STATE.IS_ERRORED, results: [], error: error});
   };
 
@@ -59,25 +62,41 @@ class Dashboard extends React.Component {
       case APP_STATE.IS_ERRORED:
         return <ErrorMsg error={this.state.error}/>;
       case APP_STATE.IS_READY:
-        return <Results type={this.state.dashboard} results={this.state.results} onViewRepoClick={this.onViewRepoClick}/>;
+        return <Results type={this.state.dashboard} results={this.getFilteredResults(this.state)}
+                        onViewRepoClick={this.onViewRepoClick} query={this.state.query}/>;
     }
   };
 
-  onViewRepoClick = (repoUrl)=>{
+  getFilteredResults = ({results, query, dashboard})=> {
+    const searchTerm = dashboard === 'USERS' ? 'login' : 'name';
+    return query ? results.filter((item) => {
+      return item[searchTerm].indexOf(query) >= 0;
+    }) : results;
+  };
+
+  onViewRepoClick = (repoUrl) => {
     this.setState({
       appState: APP_STATE.IS_LOADING,
       results: [],
       dashboard: DASHBOARD_TYPE.REPOS,
+      query: '',
       error: '',
     });
     this.fetchData(repoUrl, this.onSuccess, this.onError);
+  };
+
+  onSearchInputChange = (e) => {
+    e.preventDefault();
+    const searchQuery = e.target.value;
+    this.setState({query: searchQuery});
   };
 
   render() {
     return (
         <div className="git-dashboard">
           <h4>Git Dashboard</h4>
-          <div className="search-box"></div>
+          <SearchBox onSearchInputChange={this.onSearchInputChange} query={this.state.query}/>
+          <ResultNotification filteredResultsCount={this.getFilteredResults(this.state).length} resultsCount={this.state.results.length}/>
           <div className="search-results">
             {
               this.getActiveView()

@@ -3,7 +3,7 @@ import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 
 
-const Results = ({type, results, onViewRepoClick}) => {
+const Results = ({type, results, onViewRepoClick, query}) => {
   return (
       <div className="result-list">
         {

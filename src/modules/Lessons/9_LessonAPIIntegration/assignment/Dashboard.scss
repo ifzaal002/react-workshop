@@ -1,6 +1,7 @@
-.git-dashboard{
+.git-dashboard {
   text-align: center;
 }
+
 .card {
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.05);
@@ -18,3 +19,16 @@
   }
 }
 
+.search-box {
+  padding: 20px;
+  input {
+    line-height: 30px;
+    width: 300px;
+    font-size: 15px;
+  }
+}
+
+.notification-box {
+  padding: 10px;
+  margin-bottom: 10px;
+}
