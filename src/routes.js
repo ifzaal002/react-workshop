@@ -10,11 +10,14 @@ import LessonStateLiftup from './modules/Lessons/6_LessonStateLiftup/LessonState
 import LessonContainerPresentational from './modules/Lessons/7_LessonContainerPresentational/LessonContainerPresentational';
 import LessonUserData from './modules/Lessons/8_LessonUserData/LessonUserData';
 import LessonAPIIntegration from './modules/Lessons/9_LessonAPIIntegration/LessonAPIIntegration';
+import Dashboard from "./modules/Lessons/Dashboard/Dashboard";
+import PageNotFound from "./modules/App/components/ErrorPage/PageNotFound";
 
 
 export default (
     <Switch>
-      <Route path="/lesson/jsx" exact component={LessonJSX} />
+      <Route path="/" exact render={(props) => <Dashboard {...props}/>} />
+      <Route path="/lesson/jsx" render={(props) => <LessonJSX {...props}/>} />
       <Route path="/lesson/elements" component={LessonElements} />
       <Route path="/lesson/components-props" component={LessonCompProps} />
       <Route path="/lesson/state-lifecycle-hooks" component={LessonStateLifeHooks} />
@@ -23,5 +26,7 @@ export default (
       <Route path="/lesson/container-vs-presentational" component={LessonContainerPresentational} />
       <Route path="/lesson/handling-user-data" component={LessonUserData} />
       <Route path="/lesson/api-integration" component={LessonAPIIntegration} />
+
+      <Route component={PageNotFound}/>
     </Switch>
 );
