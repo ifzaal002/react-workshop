@@ -19,24 +19,58 @@ const DASHBOARD_TYPE = {
   REPOS: 'REPOS',
 };
 
-const API_URL = `https://api.github.com`;
+const API_URL = `https://api.github.com/users`;
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    let dashboardType = DASHBOARD_TYPE.USERS;
+    let apiURL = API_URL;
+    if (props.match && props.match.params.userId) {
+      dashboardType = DASHBOARD_TYPE.REPOS;
+      apiURL = `${API_URL}/${props.match.params.userId}/repos`;
+
+    }
+
 
     this.state = {
       appState: APP_STATE.IS_LOADING,
       results: [],
-      dashboard: DASHBOARD_TYPE.USERS,
+      dashboard: dashboardType,
       query: '',
       error: '',
+      apiUrl: apiURL,
     }
   }
 
   componentWillMount() {
-    this.fetchData(`${API_URL}/users`, this.onSuccess, this.onError);
+    this.fetchData(this.onSuccess, this.onError);
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.updateDashBoardState(nextProps.match);
+    setTimeout(()=>{
+      this.fetchData(this.onSuccess, this.onError);
+    }, 1);
+  }
+
+  updateDashBoardState = (match) => {
+    let dashboardType = DASHBOARD_TYPE.USERS;
+    let apiURL = API_URL;
+    if (match && match.params.userId) {
+      dashboardType = DASHBOARD_TYPE.REPOS;
+      apiURL = `${API_URL}/${match.params.userId}/repos`;
+    }
+    this.setState({
+      appState: APP_STATE.IS_LOADING,
+      results: [],
+      dashboard: dashboardType,
+      query: '',
+      error: '',
+      apiUrl: apiURL,
+    });
+  };
+
 
   onSuccess = (response) => {
     this.setState({appState: APP_STATE.IS_READY, results: response.data});
@@ -47,8 +81,13 @@ class Dashboard extends React.Component {
   };
 
 
-  fetchData = (url, onSuccess, onError) => {
-    axios.get(url).then(function (response) {
+  fetchData = (onSuccess, onError) => {
+    axios.get(this.state.apiUrl, {
+      auth: {
+        username: 'ifzal',
+        password: 'arb1s0ft'
+      }
+    }).then(function (response) {
       onSuccess(response);
     }).catch(function (error) {
       onError(error)
@@ -63,26 +102,15 @@ class Dashboard extends React.Component {
         return <ErrorMsg error={this.state.error}/>;
       case APP_STATE.IS_READY:
         return <Results type={this.state.dashboard} results={this.getFilteredResults(this.state)}
-                        onViewRepoClick={this.onViewRepoClick} query={this.state.query}/>;
+                        query={this.state.query}/>;
     }
   };
 
-  getFilteredResults = ({results, query, dashboard})=> {
+  getFilteredResults = ({results, query, dashboard}) => {
     const searchTerm = dashboard === 'USERS' ? 'login' : 'name';
     return query ? results.filter((item) => {
       return item[searchTerm].indexOf(query) >= 0;
     }) : results;
-  };
-
-  onViewRepoClick = (repoUrl) => {
-    this.setState({
-      appState: APP_STATE.IS_LOADING,
-      results: [],
-      dashboard: DASHBOARD_TYPE.REPOS,
-      query: '',
-      error: '',
-    });
-    this.fetchData(repoUrl, this.onSuccess, this.onError);
   };
 
   onSearchInputChange = (e) => {
@@ -96,7 +124,8 @@ class Dashboard extends React.Component {
         <div className="git-dashboard">
           <h4>Git Dashboard</h4>
           <SearchBox onSearchInputChange={this.onSearchInputChange} query={this.state.query}/>
-          <ResultNotification filteredResultsCount={this.getFilteredResults(this.state).length} resultsCount={this.state.results.length}/>
+          <ResultNotification filteredResultsCount={this.getFilteredResults(this.state).length}
+                              resultsCount={this.state.results.length}/>
           <div className="search-results">
             {
               this.getActiveView()

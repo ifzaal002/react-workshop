@@ -35,7 +35,7 @@ const LessonLoader = (props) => {
   const lessonSlug = props.match.params.slug;
   const Lesson = LESSONS[lessonSlug].lesson;
     return (
-        <Lesson title={LESSONS[lessonSlug].title}/>
+        <Lesson title={LESSONS[lessonSlug].title} match={props.match}/>
     )
 };
 

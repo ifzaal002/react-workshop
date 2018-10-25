@@ -11,7 +11,8 @@ const WorkshopRoutes = ({lessonLoader}) => {
       <Switch>
         <Route path="/" exact render={(props) => <Dashboard {...props}/>}/>
 
-        <Route path="/lesson/:slug" component={lessonLoader}/>
+        <Route path="/lesson/:slug" exact component={lessonLoader}/>
+        <Route path="/lesson/:slug/:userId" exact component={lessonLoader}/>
 
         <Route component={PageNotFound}/>
       </Switch>

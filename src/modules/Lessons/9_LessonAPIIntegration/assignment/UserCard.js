@@ -1,5 +1,6 @@
 import React from 'react';
 import './UserCard.css'
+import Link from "react-router-dom/es/Link";
 
 
 const UserCard = ({user, onViewRepoClick}) => {
@@ -22,10 +23,7 @@ const UserCard = ({user, onViewRepoClick}) => {
           </tr>
           </tbody>
         </table>
-        <button className="action-btn" onClick={() => {
-          onViewRepoClick(user.repos_url)
-        }}>View Repositories
-        </button>
+        <Link className="action-btn" to={`/lesson/api-integration/${user.login}`}>View Repositories</Link>
       </div>
   )
 };
