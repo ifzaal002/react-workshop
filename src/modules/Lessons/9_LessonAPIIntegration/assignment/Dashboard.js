@@ -82,12 +82,7 @@ class Dashboard extends React.Component {
 
 
   fetchData = (onSuccess, onError) => {
-    axios.get(this.state.apiUrl, {
-      auth: {
-        username: 'ifzal',
-        password: 'arb1s0ft'
-      }
-    }).then(function (response) {
+    axios.get(this.state.apiUrl).then(function (response) {
       onSuccess(response);
     }).catch(function (error) {
       onError(error)
