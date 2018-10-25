@@ -3,12 +3,12 @@ import React from 'react';
 import Intro from './components/APIIntegrationIntro';
 import PracticeAPIIntegration from './components/PracticeAPIIntegration';
 
-const LessonAPIIntegration = ({title}) => {
+const LessonAPIIntegration = ({title, match}) => {
   return (
       <div className="lesson-container">
         <Intro title={title} />
         <div className="lesson-parts">
-          <PracticeAPIIntegration />
+          <PracticeAPIIntegration match={match}/>
         </div>
       </div>
   );

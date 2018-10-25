@@ -1,14 +1,14 @@
 import React from 'react';
 
-import GitDashboard from './part5/GitDashboard';
+import Dashboard from '../assignment/Dashboard';
 
 import './PracticeAPIIntegration.css'
 
-const PracticeAPIIntegration = () => {
+const PracticeAPIIntegration = ({match}) => {
   return (
       <section className="lesson-api-integration info-panel">
         <h2>Practice API Integration</h2>
-        <GitDashboard />
+        <Dashboard match={match}/>
       </section>
   );
 };

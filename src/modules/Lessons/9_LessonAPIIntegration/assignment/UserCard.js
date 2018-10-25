@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import './UserCard.css'
+import Link from "react-router-dom/es/Link";
 
-import './UserCard.css';
 
-const UserCard = ({user}) => {
+const UserCard = ({user, onViewRepoClick}) => {
   return (
       <div className="card user">
         <img src={user.avatar_url} alt="User Profile" width="100"/>
@@ -23,13 +23,9 @@ const UserCard = ({user}) => {
           </tr>
           </tbody>
         </table>
-        <button className="action-btn" onClick={() => loadReposCB(user.repos_url)}>View Repositories</button>
+        <Link className="action-btn" to={`/lesson/api-integration/${user.login}`}>View Repositories</Link>
       </div>
-  );
-};
-
-UserCard.propTypes = {
-  user: PropTypes.object.isRequired,
+  )
 };
 
 export default UserCard;
