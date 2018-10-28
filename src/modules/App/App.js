@@ -5,6 +5,8 @@ import Footer from './components/Footer/Footer';
 import Lessons from '../Lessons/Lessons';
 
 import './App.css';
+import Provider from "react-redux/es/components/Provider";
+import Store from "./components/Footer/Store";
 
 class App extends Component {
   render() {
@@ -12,7 +14,11 @@ class App extends Component {
       <div className="App">
         <Header/>
         <Lessons />
-        <Footer/>
+        <Provider store={Store}>
+          <Footer/>
+        </Provider>
+
+
       </div>
     );
   }
